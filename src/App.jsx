@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@/components";
+import { ThemeProvider, ProtectedRoute } from "@/components";
 import "./App.css";
 
-import AppLayout from "./layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 import {
   JobListing,
   JobPage,
@@ -24,27 +24,51 @@ const router = createBrowserRouter([
       },
       {
         path: "/onboarding",
-        element: <OnBoarding />,
+        element: (
+          <ProtectedRoute>
+            <OnBoarding />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/jobs",
-        element: <JobListing />,
+        element: (
+          <ProtectedRoute>
+            <JobListing />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/jobs/:id",
-        element: <JobPage />,
+        element: (
+          <ProtectedRoute>
+            <JobPage />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/post-job",
-        element: <PostJob />,
+        element: (
+          <ProtectedRoute>
+            <PostJob />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/saved-jobs",
-        element: <SavedJobs />,
+        element: (
+          <ProtectedRoute>
+            <SavedJobs />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/my-jobs",
-        element: <MyJobs />,
+        element: (
+          <ProtectedRoute>
+            <MyJobs />,
+          </ProtectedRoute>
+        ),
       },
     ],
   },
