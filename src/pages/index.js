@@ -1,10 +1,10 @@
-import JobListing from "./JobListing";
-import JobPage from "./JobPage";
-import LandingPage from "./LandingPage";
 import MyJobs from "./MyJobs";
-import OnBoarding from "./OnBoarding";
+import JobPage from "./JobPage";
 import PostJob from "./PostJob";
 import SavedJobs from "./SavedJobs";
+import JobListing from "./JobListing";
+import OnBoarding from "./OnBoarding";
+import LandingPage from "./LandingPage";
+import ErrorRedirect from "./ErrorRedirect";
 
-
-export { JobListing, SavedJobs, PostJob, OnBoarding, MyJobs, LandingPage, JobPage };
+export { JobListing, SavedJobs, PostJob, OnBoarding, MyJobs, LandingPage, JobPage, ErrorRedirect };

@@ -1,13 +1,22 @@
 import { Button } from "./ui/button";
-import { Link, useSearchParams } from "react-router-dom";
-import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/clerk-react";
-import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { BriefcaseBusiness, Heart, PenBox, ScanSearch, Search } from "lucide-react";
+
+import {
+  SignedIn,
+  SignedOut,
+  SignIn,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
 
 const Header = () => {
+  const [search, setSearch] = useSearchParams();
   const [showSignIn, setShowSignIn] = useState(false);
 
-  const [search, setSearch] = useSearchParams();
+  const { user } = useUser();
+  const userRole = user?.unsafeMetadata?.role;
 
   useEffect(() => {
     if (search.get("sign-in")) {
@@ -30,18 +39,27 @@ const Header = () => {
         </Link>
         <div className="flex gap-8">
           <SignedOut>
-            <Button variant="outline" onClick={() => setShowSignIn(true)}>
+            <Button
+              variant="outline"
+              className="border border-gray-500/70"
+              onClick={() => setShowSignIn(true)}
+            >
               Login
             </Button>
           </SignedOut>
           <SignedIn>
-            {/* Conditional rendering */}
-            <Link to="/post-job">
-              <Button variant="destructive" className="rounded-xl">
-                <PenBox size={20} className="mr-2" />
-                Post a Job
-              </Button>
-            </Link>
+            {userRole && (
+              <Link to={userRole === "candidate" ? "/jobs" : "/post-job"}>
+                <Button variant="destructive" className="rounded-xl">
+                  {userRole === "candidate" ? (
+                    <ScanSearch size={20} className="mr-2" />
+                  ) : (
+                    <PenBox size={20} className="mr-2" />
+                  )}
+                  {userRole === "candidate" ? "View all Jobs" : "Post a Job"}
+                </Button>
+              </Link>
+            )}
             <UserButton
               appearance={{
                 elements: {
@@ -50,15 +68,15 @@ const Header = () => {
               }}
             >
               <UserButton.MenuItems>
-                <UserButton.Link 
-                label="My Jobs"
-                labelIcon={<BriefcaseBusiness size={15} />}
-                href="/my-jobs"
+                <UserButton.Link
+                  label="My Jobs"
+                  labelIcon={<BriefcaseBusiness size={15} />}
+                  href="/my-jobs"
                 />
-                <UserButton.Link 
-                label="Saved Jobs"
-                labelIcon={<Heart size={15} />}
-                href="/saved-jobs"
+                <UserButton.Link
+                  label="Saved Jobs"
+                  labelIcon={<Heart size={15} />}
+                  href="/saved-jobs"
                 />
               </UserButton.MenuItems>
             </UserButton>

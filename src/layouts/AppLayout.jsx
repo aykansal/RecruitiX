@@ -1,4 +1,5 @@
 import { Header } from "@/components";
+import { Toaster } from "@/components/ui/toaster";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
@@ -8,6 +9,7 @@ const AppLayout = () => {
       <main className="min-h-screen container">
         <Header />
         <Outlet />
+        <Toaster />
       </main>
     </div>
   );

@@ -1,10 +1,10 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ThemeProvider, ProtectedRoute } from "@/components";
 import "./App.css";
-
 import AppLayout from "@/layouts/AppLayout";
+import { ThemeProvider, ProtectedRoute } from "@/components";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
+  ErrorRedirect,
   JobListing,
   JobPage,
   LandingPage,
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         path: "/onboarding",
         element: (
           <ProtectedRoute>
-            <OnBoarding />,
+            <OnBoarding />
           </ProtectedRoute>
         ),
       },
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         path: "/jobs",
         element: (
           <ProtectedRoute>
-            <JobListing />,
+            <JobListing />
           </ProtectedRoute>
         ),
       },
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         path: "/jobs/:id",
         element: (
           <ProtectedRoute>
-            <JobPage />,
+            <JobPage />
           </ProtectedRoute>
         ),
       },
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         path: "/post-job",
         element: (
           <ProtectedRoute>
-            <PostJob />,
+            <PostJob />
           </ProtectedRoute>
         ),
       },
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         path: "/saved-jobs",
         element: (
           <ProtectedRoute>
-            <SavedJobs />,
+            <SavedJobs />
           </ProtectedRoute>
         ),
       },
@@ -66,11 +66,12 @@ const router = createBrowserRouter([
         path: "/my-jobs",
         element: (
           <ProtectedRoute>
-            <MyJobs />,
+            <MyJobs />
           </ProtectedRoute>
         ),
       },
     ],
+    errorElement: <ErrorRedirect />,
   },
 ]);
 
