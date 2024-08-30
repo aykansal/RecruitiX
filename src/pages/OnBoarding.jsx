@@ -31,7 +31,7 @@ const OnBoarding = () => {
   }, [isLoaded, user, navigate]);
 
   if (!isLoaded) {
-    return <BarLoader />;
+    return <BarLoader className="mb-4" width={"100%"} color="#36d7d7" />;
   }
 
   const roles = [

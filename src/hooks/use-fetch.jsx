@@ -13,13 +13,13 @@ const useFetch = (cb, options = {}) => {
     setError(null);
 
     try {
-      const supabaseAccessToken = await session?.getToken({
-        template: "supabase",
+      const supabaseAccessToken = await session.getToken({
+        template: "recruitixDB", //jwt from clerk
       });
-      const response = cb(supabaseAccessToken, options, ...args);
+      const response = await cb(supabaseAccessToken, options, ...args);
       setData(response);
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError(err.message || err);
     } finally {
       setLoading(false);
     }
