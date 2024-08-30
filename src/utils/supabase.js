@@ -1,18 +1,20 @@
-
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-
-const supabaseClient = async (supabaseAccessToken) => {
-    const supabase = await createClient(supabaseUrl, supabaseKey, {
-        global: {
-            headers: {
-                Authorization: `Bearer ${supabaseAccessToken}`
-            },
+const supabaseClient = (supabaseAccessToken) => {
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+        headers: {
+            Authorization: `Bearer ${supabaseAccessToken}`
         },
     });
+    // or
+
+    //     const supabase = createClient(supabaseUrl, supabaseKey);
+    //     if (supabaseAccessToken) {
+    //         supabase.auth.setAuth(supabaseAccessToken);
+    //     }
     return supabase;
 };
 

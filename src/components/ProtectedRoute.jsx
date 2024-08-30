@@ -14,7 +14,10 @@ const ProtectedRoute = ({ children }) => {
     if (pathname === "/post-job" && userRole !== "recruiter") {
       return <Navigate to="/onboarding" />;
     }
-    if (pathname === "/jobs" && userRole !== "candidate") {
+    // if (pathname === "/jobs" && userRole == "recruiter") {
+    //   return <Navigate to="/jobs" />;
+    // }
+    if (pathname === "/jobs" && userRole !==  "candidate") {
       return <Navigate to="/onboarding" />;
     }
   }
