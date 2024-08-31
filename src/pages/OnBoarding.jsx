@@ -25,7 +25,7 @@ const OnBoarding = () => {
   useEffect(() => {
     if (isLoaded && user?.unsafeMetadata?.role) {
       const redirectPath =
-        user.unsafeMetadata.role === "candidate" ? "/jobs" : "/post-job";
+        user.unsafeMetadata.role === "recruiter" ? "/post-job" : "/jobs";
       navigate(redirectPath);
     }
   }, [isLoaded, user, navigate]);

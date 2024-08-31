@@ -44,26 +44,17 @@ const LandingPage = () => {
           Explore thousands of job listings or find the perfect candidate
         </p>
       </section>
-
+      {/* CTA */}
       <div className="flex gap-6 justify-center">
-        {userRole ? (
-          renderButton(
-            userRole === "candidate" ? "/jobs" : "/post-job",
-            userRole === "candidate" ? "View all Jobs" : "Post a Job",
-            userRole === "candidate" ? "blue" : "destructive"
-          )
+        {userRole === "candidate" ? (
+          renderButton("/jobs", "View all Jobs", "blue")
         ) : (
           <>
-            {renderButton("/jobs", "Find Jobs", "blue")}
-            {renderButton(
-              userRole === "candidate" ? "/jobs" : "/post-job",
-              userRole === "candidate" ? "View all Jobs" : "Post a Job",
-              "destructive"
-            )}
+            {renderButton("/jobs", "View all Jobs", "blue")}
+            {renderButton("post-job", "Post a Job", "destructive")}
           </>
         )}
       </div>
-
       {/* Carousel */}
       <Carousel plugins={[Autoplay({ delay: 1500 })]} className="w-full py-10">
         <CarouselContent className="flex gap-5 sm:gap-20 items-center">
@@ -78,10 +69,8 @@ const LandingPage = () => {
           ))}
         </CarouselContent>
       </Carousel>
-
       {/* Banner */}
       <img src="/banner.jpeg" alt="banner" className="w-full" />
-
       {/* Cards Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
@@ -106,7 +95,6 @@ const LandingPage = () => {
           </Card>
         ))}
       </section>
-
       {/* FAQ */}
       <Accordion type="single" collapsible>
         {faqs.map(({ id, question, answer }) => (

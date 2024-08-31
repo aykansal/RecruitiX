@@ -2,9 +2,9 @@ import { useSession } from "@clerk/clerk-react";
 import { useState } from "react";
 
 const useFetch = (cb, options = {}) => {
-  const [data, setData] = useState(undefined);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { session } = useSession();
 
@@ -14,7 +14,7 @@ const useFetch = (cb, options = {}) => {
 
     try {
       const supabaseAccessToken = await session.getToken({
-        template: "recruitixDB", //jwt from clerk
+        template: "recruitixDB", // jwt from clerk
       });
       const response = await cb(supabaseAccessToken, options, ...args);
       setData(response);

@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
@@ -7,13 +5,44 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Heart, MapPinIcon, Trash2Icon } from "lucide-react";
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
+import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
+import { useEffect, useState } from "react";
+import { getSavedJobs } from "@/api/apiJobs";
+import { useUser } from "@clerk/clerk-react";
+import { Heart, MapPinIcon, Trash2Icon } from "lucide-react";
 
-const JobCard = ({ job }) => {
+const JobCard = ({
+  job,
+  isMyJob = false,
+  savedInit = false,
+  onJobSaved = () => {},
+}) => {
+  const { user } = useUser();
+  const [saved, setSaved] = useState(savedInit);
+
+  const {
+    fn: fnSavedJob,
+    data: savedJob,
+    loading: loadingSavedJobs,
+  } = useFetch(getSavedJobs, { alreadSaved: saved });
+
+  const handleSaveJob = async () => {
+    await fnSavedJob({
+      job_id: job.id,
+      user_id: user.id,
+    });
+    onJobSaved();
+  };
+  useEffect(() => {
+    if (savedJob !== undefined) setSaved(savedJob?.length > 0);
+  }, [savedJob]);
+
   return (
     <Card className="flex flex-col">
-      {loadingDeleteJob && (
+      {loadingSavedJobs && (
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
       )}
       <CardHeader className="flex">
@@ -45,7 +74,7 @@ const JobCard = ({ job }) => {
           </Button>
         </Link>
         {!isMyJob && (
-          <Button variant="outline" className="w-15">
+          <Button variant="outline" className="w-15" onClick={handleSaveJob}>
             {saved ? (
               <Heart size={20} fill="red" stroke="red" />
             ) : (

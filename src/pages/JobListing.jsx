@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { getJobs } from "@/api/getJobs";
+import { getJobs } from "@/api/apiJobs";
 import useFetch from "@/hooks/use-fetch";
-import { useUser } from "@clerk/clerk-react";
 import { BarLoader } from "react-spinners";
 import JobCard from "@/components/job-card";
+import { useUser } from "@clerk/clerk-react";
+import React, { useEffect, useState } from "react";
 
 const JobListing = () => {
   const { isLoaded } = useUser();
@@ -18,7 +18,7 @@ const JobListing = () => {
   } = useFetch(getJobs, { company_id, location, searchQuery });
 
   useEffect(() => {
-    isLoaded && fnJobs();
+    fnJobs();
   }, [isLoaded, location, searchQuery, company_id]);
 
   if (!isLoaded) {
@@ -37,7 +37,13 @@ const JobListing = () => {
       {loadingJobs === false && (
         <div>
           {dataJobs?.length > 0 ? (
-            dataJobs.map((job) => <JobCard key={job.id} job={job} />)
+            dataJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                savedInit={job?.saved?.length > 0}
+              />
+            ))
           ) : (
             <div className="text-center text-2xl">No jobs found</div>
           )}
